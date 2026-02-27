@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { feedsAPI, notesAPI, rssAPI } from '../services/api';
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 import './Feed.css';
 
 export default function Feed() {
@@ -395,23 +396,16 @@ ${selectedFeed.content || ''}
 
             {/* Original Content */}
             <div className="article-content">
-              {selectedFeed.content && selectedFeed.content.length > 100 ? (
-                <ReactMarkdown>{selectedFeed.content}</ReactMarkdown>
-              ) : (
-                <div className="iframe-container">
-                  <div className="iframe-notice">
-                    <p>📄 原文内容</p>
-                    <a href={selectedFeed.link} target="_blank" rel="noopener noreferrer" className="btn-open-original">
-                      在新标签页打开 ↗
-                    </a>
-                  </div>
-                  <iframe 
-                    src={selectedFeed.link} 
-                    title="Article Content"
-                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                  />
-                </div>
-              )}
+              <ReactMarkdown 
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  img: ({node, ...props}) => (
+                    <img {...props} style={{maxWidth: '100%', height: 'auto', borderRadius: '8px'}} />
+                  ),
+                }}
+              >
+                {selectedFeed.content || '暂无内容'}
+              </ReactMarkdown>
             </div>
 
             {/* AI Summary Section */}

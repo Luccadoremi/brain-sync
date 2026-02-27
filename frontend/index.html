@@ -8,6 +8,20 @@
     <meta name="theme-color" content="#4F46E5" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>Brain-Sync - 大脑外脑</title>
+    <script>
+      // Start single page app for GitHub Pages
+      // https://github.com/rafgraph/spa-github-pages
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
   </head>
   <body>
     <div id="root"></div>

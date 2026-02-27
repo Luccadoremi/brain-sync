@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [
     react(),
   ],
-  base: process.env.NODE_ENV === 'production' ? '/rss-digest/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/brain-sync/' : '/',
   server: {
     port: 3000,
     host: '0.0.0.0',

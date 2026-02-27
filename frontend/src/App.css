@@ -1,0 +1,113 @@
+.app {
+  min-height: 100vh;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 18px;
+  color: #86868b;
+}
+
+/* Apple-inspired button styles */
+.btn {
+  padding: 11px 22px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: -0.01em;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-small {
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, #007AFF 0%, #0051D5 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, #0062CC 0%, #0040AA 100%);
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.35);
+}
+
+.btn-secondary {
+  background: #f5f5f7;
+  color: #1d1d1f;
+}
+
+.btn-secondary:hover {
+  background: #e8e8ed;
+}
+
+.btn-danger {
+  background: linear-gradient(180deg, #FF3B30 0%, #D70015 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(255, 59, 48, 0.25);
+}
+
+.btn-danger:hover {
+  background: linear-gradient(180deg, #E6342A 0%, #C00012 100%);
+  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.35);
+}
+
+/* Apple-inspired card styles */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  margin-bottom: 12px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.card:hover {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Input styles */
+.input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid #d2d2d7;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.2s;
+  background: white;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #007AFF;
+  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+}
+
+textarea.input {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+select.input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2386868b' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}

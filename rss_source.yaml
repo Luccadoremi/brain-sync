@@ -1,0 +1,48 @@
+# RSS feed sources
+feeds:
+  # AI Research & Official Blogs
+  - name: "OpenAI Blog"
+    url: "https://openai.com/blog/rss.xml"
+    category: "AI研究与官方博客"
+  - name: "Anthropic News"
+    url: "https://www.anthropic.com/news/rss.xml"
+    category: "AI研究与官方博客"
+  - name: "Google AI Blog"
+    url: "https://blog.google/technology/ai/rss/"
+    category: "AI研究与官方博客"
+  - name: "DeepMind Blog"
+    url: "https://deepmind.google/blog/rss.xml"
+    category: "AI研究与官方博客"
+  
+  # AI Industry News & Analysis
+  - name: "TechCrunch AI"
+    url: "https://techcrunch.com/category/artificial-intelligence/feed/"
+    category: "AI行业新闻"
+  - name: "Towards Data Science"
+    url: "https://towardsdatascience.com/feed"
+    category: "AI行业新闻"
+  - name: "VentureBeat AI"
+    url: "https://venturebeat.com/category/ai/feed/"
+    category: "AI行业新闻"
+  - name: "MIT Technology Review AI"
+    url: "https://www.technologyreview.com/topic/artificial-intelligence/feed"
+    category: "AI行业新闻"
+  - name: "AI Alignment Forum"
+    url: "https://www.alignmentforum.org/feed.xml"
+    category: "AI行业新闻"
+  
+  # AI Thought Leaders
+  - name: "Simon Willison (AI/LLM)"
+    url: "https://simonwillison.net/atom/everything/"
+    category: "AI思想领袖"
+  
+  # Financial & Market News
+  - name: "CNBC Technology"
+    url: "https://www.cnbc.com/id/19854910/device/rss/rss.html"
+    category: "金融与市场"
+  - name: "Wall Street Journal Tech"
+    url: "https://feeds.a.dj.com/rss/RSSWSJD.xml"
+    category: "金融与市场"
+  - name: "SeekingAlpha AI"
+    url: "https://seekingalpha.com/tag/artificial-intelligence.xml"
+    category: "金融与市场"

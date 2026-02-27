@@ -46,8 +46,10 @@
 
 @media (min-width: 768px) {
   .content {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+    padding: 0;
+  }
+  
+  .bottom-nav {
+    display: none;
   }
 }

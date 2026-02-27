@@ -266,39 +266,41 @@ ${selectedFeed.content || ''}
         {/* Feed List Section - Always visible on desktop */}
         <div className="feed-list-section">
             <div className="panel-header">
-            <h3>{selectedSource ? selectedSource.name : '全部内容'}</h3>
-          <div className="header-actions">
-            <button 
-              className="btn-mark-all-read"
-              onClick={handleMarkAllRead}
-              disabled={displayFeeds.filter(f => !f.is_read).length === 0}
-              title="标记全部已读"
-            >
-              ✓ 全部已读
-            </button>
-            <div className="read-filter-buttons">
-            <button
-              className={`filter-btn ${readFilter === 'unread' ? 'active' : ''}`}
-              onClick={() => setReadFilter('unread')}
-            >
-              未读
-            </button>
-            <button
-              className={`filter-btn ${readFilter === 'all' ? 'active' : ''}`}
-              onClick={() => setReadFilter('all')}
-            >
-              全部
-            </button>
-            <button
-              className={`filter-btn ${readFilter === 'read' ? 'active' : ''}`}
-              onClick={() => setReadFilter('read')}
-            >
-              已读
-            </button>
-          </div>
-          </div>
-          <span className="feed-count">{displayFeeds.length} 条</span>
-        </div>
+              <div className="panel-header-top">
+                <h3>{selectedSource ? selectedSource.name : '全部内容'}</h3>
+                <span className="feed-count">{displayFeeds.length} 条</span>
+              </div>
+              <div className="header-actions">
+                <button 
+                  className="btn-mark-all-read"
+                  onClick={handleMarkAllRead}
+                  disabled={displayFeeds.filter(f => !f.is_read).length === 0}
+                  title="标记全部已读"
+                >
+                  ✓ 全部已读
+                </button>
+                <div className="read-filter-buttons">
+                  <button
+                    className={`filter-btn ${readFilter === 'unread' ? 'active' : ''}`}
+                    onClick={() => setReadFilter('unread')}
+                  >
+                    未读
+                  </button>
+                  <button
+                    className={`filter-btn ${readFilter === 'all' ? 'active' : ''}`}
+                    onClick={() => setReadFilter('all')}
+                  >
+                    全部
+                  </button>
+                  <button
+                    className={`filter-btn ${readFilter === 'read' ? 'active' : ''}`}
+                    onClick={() => setReadFilter('read')}
+                  >
+                    已读
+                  </button>
+                </div>
+              </div>
+            </div>
 
         {displayFeeds.length === 0 ? (
           <div className="empty-state">

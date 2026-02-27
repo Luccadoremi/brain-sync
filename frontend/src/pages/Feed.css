@@ -387,10 +387,16 @@
   padding: 20px 24px;
   border-bottom: 1px solid #e5e5e7;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 12px;
   flex-shrink: 0;
-  flex-wrap: wrap;
+}
+
+.panel-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .panel-header h3 {
@@ -401,19 +407,18 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex-shrink: 0;
+  flex: 1;
+  min-width: 0;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex: 1;
-  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .feed-count {
-  margin-left: auto;
   flex-shrink: 0;
 }
 

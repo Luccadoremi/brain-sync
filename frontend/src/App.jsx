@@ -22,7 +22,7 @@ function AppContent() {
   const { isAuthenticated } = useAuth();
 
   return (
-    <Router>
+    <Router basename="/brain-sync">
       <Routes>
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login />} />
         <Route

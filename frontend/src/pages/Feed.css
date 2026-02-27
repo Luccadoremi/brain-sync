@@ -253,6 +253,32 @@
   margin: 0;
 }
 
+.header-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-add-rss {
+  background: #007AFF;
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.btn-add-rss:hover {
+  background: #0051D5;
+}
+
 .btn-refresh {
   background: none;
   border: none;

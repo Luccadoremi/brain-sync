@@ -17,6 +17,8 @@ export default function Feed() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [readFilter, setReadFilter] = useState('unread'); // 'all', 'unread', 'read'
+  const [showAddRSSModal, setShowAddRSSModal] = useState(false);
+  const [newRSS, setNewRSS] = useState({ name: '', url: '', type: 'rss' });
 
   useEffect(() => {
     loadFeeds();
@@ -161,6 +163,23 @@ ${selectedFeed.content || ''}
     }
   };
 
+  const handleAddRSS = async () => {
+    if (!newRSS.name.trim() || !newRSS.url.trim()) {
+      alert('请填写订阅源名称和 URL');
+      return;
+    }
+
+    try {
+      await rssAPI.createSource(newRSS);
+      alert('添加成功！');
+      setShowAddRSSModal(false);
+      setNewRSS({ name: '', url: '', type: 'rss' });
+      loadSources();
+    } catch (error) {
+      alert('添加失败: ' + (error.response?.data?.detail || error.message));
+    }
+  };
+
   if (loading) {
     return <div className="page-loading">加载中...</div>;
   }
@@ -195,14 +214,23 @@ ${selectedFeed.content || ''}
         
         <div className="sidebar-header">
           <h2>📚 订阅源</h2>
-          <button 
-            className="btn-refresh" 
-            onClick={handleRefreshFeeds}
-            disabled={fetching}
-            title="更新所有源"
-          >
-            {fetching ? '⏳' : '🔄'}
-          </button>
+          <div className="header-buttons">
+            <button 
+              className="btn-add-rss" 
+              onClick={() => setShowAddRSSModal(true)}
+              title="添加订阅源"
+            >
+              +
+            </button>
+            <button 
+              className="btn-refresh" 
+              onClick={handleRefreshFeeds}
+              disabled={fetching}
+              title="更新所有源"
+            >
+              {fetching ? '⏳' : '🔄'}
+            </button>
+          </div>
         </div>
         
         <div className="source-list">
@@ -420,6 +448,54 @@ ${selectedFeed.content || ''}
               </button>
               <button className="btn btn-primary" onClick={handleSaveToVault}>
                 确认保存
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add RSS Modal */}
+      {showAddRSSModal && (
+        <div className="modal-overlay" onClick={() => setShowAddRSSModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>添加 RSS 订阅源</h3>
+            <div className="form-group">
+              <label>订阅源名称</label>
+              <input
+                type="text"
+                className="input"
+                placeholder="例如：TechCrunch"
+                value={newRSS.name}
+                onChange={(e) => setNewRSS({ ...newRSS, name: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label>RSS URL</label>
+              <input
+                type="url"
+                className="input"
+                placeholder="https://example.com/rss"
+                value={newRSS.url}
+                onChange={(e) => setNewRSS({ ...newRSS, url: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label>类型</label>
+              <select
+                className="input"
+                value={newRSS.type}
+                onChange={(e) => setNewRSS({ ...newRSS, type: e.target.value })}
+              >
+                <option value="rss">RSS/Atom</option>
+                <option value="podcast">播客</option>
+              </select>
+            </div>
+            <div className="modal-actions">
+              <button className="btn btn-secondary" onClick={() => setShowAddRSSModal(false)}>
+                取消
+              </button>
+              <button className="btn btn-primary" onClick={handleAddRSS}>
+                添加
               </button>
             </div>
           </div>

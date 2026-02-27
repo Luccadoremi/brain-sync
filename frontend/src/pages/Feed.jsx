@@ -58,6 +58,7 @@ export default function Feed() {
   };
 
   const handleAnalyzeFeed = async (feed) => {
+    console.log('Selected feed:', feed); // Debug: check feed structure
     setSelectedFeed(feed);
     setAnalysis(null); // Clear previous analysis
     
@@ -406,7 +407,7 @@ ${selectedFeed.content || ''}
                   ),
                 }}
               >
-                {selectedFeed.content || '暂无内容'}
+                {selectedFeed.content || selectedFeed.description || selectedFeed.summary || '暂无内容'}
               </ReactMarkdown>
             </div>
 

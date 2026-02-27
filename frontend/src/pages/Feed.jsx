@@ -70,6 +70,28 @@ export default function Feed() {
     }
   };
 
+  const handleMarkAllRead = async () => {
+    if (displayFeeds.length === 0) return;
+    
+    if (!confirm(`确定要标记全部 ${displayFeeds.length} 条内容为已读吗？`)) {
+      return;
+    }
+    
+    try {
+      // Mark all displayed feeds as read
+      const unreadFeeds = displayFeeds.filter(f => !f.is_read);
+      await Promise.all(unreadFeeds.map(feed => feedsAPI.markRead(feed.id)));
+      
+      // Update local state
+      setFeeds(feeds.map(f => 
+        displayFeeds.find(df => df.id === f.id) ? { ...f, is_read: true } : f
+      ));
+    } catch (error) {
+      console.error('Failed to mark all as read:', error);
+      alert('标记失败，请重试');
+    }
+  };
+
   const handleAIAnalysis = async () => {
     if (!selectedFeed) return;
     
@@ -217,7 +239,16 @@ ${selectedFeed.content || ''}
           <div className="feed-list-section">
             <div className="panel-header">
             <h3>{selectedSource ? selectedSource.name : '全部内容'}</h3>
-          <div className="read-filter-buttons">
+          <div className="header-actions">
+            <button 
+              className="btn-mark-all-read"
+              onClick={handleMarkAllRead}
+              disabled={displayFeeds.filter(f => !f.is_read).length === 0}
+              title="标记全部已读"
+            >
+              ✓ 全部已读
+            </button>
+            <div className="read-filter-buttons">
             <button
               className={`filter-btn ${readFilter === 'unread' ? 'active' : ''}`}
               onClick={() => setReadFilter('unread')}
@@ -236,6 +267,7 @@ ${selectedFeed.content || ''}
             >
               已读
             </button>
+          </div>
           </div>
           <span className="feed-count">{displayFeeds.length} 条</span>
         </div>

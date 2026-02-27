@@ -395,7 +395,23 @@ ${selectedFeed.content || ''}
 
             {/* Original Content */}
             <div className="article-content">
-              <ReactMarkdown>{selectedFeed.content || '暂无内容'}</ReactMarkdown>
+              {selectedFeed.content && selectedFeed.content.length > 100 ? (
+                <ReactMarkdown>{selectedFeed.content}</ReactMarkdown>
+              ) : (
+                <div className="iframe-container">
+                  <div className="iframe-notice">
+                    <p>📄 原文内容</p>
+                    <a href={selectedFeed.link} target="_blank" rel="noopener noreferrer" className="btn-open-original">
+                      在新标签页打开 ↗
+                    </a>
+                  </div>
+                  <iframe 
+                    src={selectedFeed.link} 
+                    title="Article Content"
+                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                  />
+                </div>
+              )}
             </div>
 
             {/* AI Summary Section */}

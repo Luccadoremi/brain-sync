@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import './Settings.css';
 
@@ -13,6 +14,14 @@ export default function Settings() {
 
   return (
     <div className="settings-page">
+      <nav className="page-nav">
+        <Link to="/" className="nav-back">← 返回信息流</Link>
+        <div className="nav-links">
+          <Link to="/vault" className="nav-link">📚 知识库</Link>
+          <Link to="/settings" className="nav-link active">⚙️ 设置</Link>
+        </div>
+      </nav>
+      
       <div className="page-header">
         <h1>⚙️ 系统设置</h1>
       </div>

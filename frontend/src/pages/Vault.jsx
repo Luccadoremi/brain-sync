@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { notesAPI } from '../services/api';
 import ReactMarkdown from 'react-markdown';
 import './Vault.css';
@@ -125,6 +126,14 @@ export default function Vault() {
 
   return (
     <div className="vault-page">
+      <nav className="page-nav">
+        <Link to="/" className="nav-back">← 返回信息流</Link>
+        <div className="nav-links">
+          <Link to="/vault" className="nav-link active">📚 知识库</Link>
+          <Link to="/settings" className="nav-link">⚙️ 设置</Link>
+        </div>
+      </nav>
+      
       <div className="page-header">
         <h1>📚 个人知识库</h1>
         <button className="btn btn-primary btn-small" onClick={() => setShowCreateModal(true)}>

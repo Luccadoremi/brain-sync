@@ -39,13 +39,11 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (token) => {
     try {
-      const response = await authAPI.verifyToken(token);
-      console.log('Login response:', response);
+      await authAPI.verifyToken(token);
       localStorage.setItem('accessToken', token);
       setIsAuthenticated(true);
       return true;
     } catch (error) {
-      console.error('Login error:', error, error.response);
       throw new Error('Invalid access token');
     }
   };

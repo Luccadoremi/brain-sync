@@ -45,10 +45,6 @@
 }
 
 @media (min-width: 768px) {
-  .content {
-    padding: 0;
-  }
-  
   .bottom-nav {
     display: none;
   }

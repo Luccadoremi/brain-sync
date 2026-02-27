@@ -155,6 +155,21 @@ ${selectedFeed.content || ''}
     <div className="feed-page-layout">
       {/* Left Sidebar - Source List */}
       <aside className="sources-sidebar">
+        <div className="main-nav">
+          <Link to="/" className="nav-link active">
+            <span>📰</span>
+            <span>信息流</span>
+          </Link>
+          <Link to="/vault" className="nav-link">
+            <span>📚</span>
+            <span>知识库</span>
+          </Link>
+          <Link to="/settings" className="nav-link">
+            <span>⚙️</span>
+            <span>设置</span>
+          </Link>
+        </div>
+        
         <div className="sidebar-header">
           <h2>📚 订阅源</h2>
           <button 

@@ -194,7 +194,7 @@ ${selectedFeed.content || ''}
     });
 
   return (
-    <div className="feed-page-layout">
+    <div className={`feed-page-layout ${selectedFeed ? 'detail-active' : ''}`}>
       {/* Left Sidebar - Source List */}
       <aside className="sources-sidebar">
         <div className="main-nav">
@@ -260,11 +260,10 @@ ${selectedFeed.content || ''}
         </div>
       </aside>
 
-      {/* Main Content Area - List or Detail */}
+      {/* Middle - Feed List Panel */}
       <main className="feed-list-panel">
-        {!selectedFeed ? (
-          /* Feed List Section */
-          <div className="feed-list-section">
+        {/* Feed List Section - Always visible on desktop */}
+        <div className="feed-list-section">
             <div className="panel-header">
             <h3>{selectedSource ? selectedSource.name : '全部内容'}</h3>
           <div className="header-actions">
@@ -338,8 +337,16 @@ ${selectedFeed.content || ''}
           </div>
         )}
         </div>
+      </main>
+
+      {/* Right - Detail Panel */}
+      <aside className="feed-detail-panel">
+        {!selectedFeed ? (
+          <div className="detail-empty">
+            <p>👈 选择一篇文章查看详情</p>
+          </div>
         ) : (
-          /* Detail Section - Replaces the list when feed is selected */
+          /* Detail Section */
           <div className="feed-detail-section">
             <div className="detail-content">
               <div className="detail-header">
@@ -421,7 +428,7 @@ ${selectedFeed.content || ''}
           </div>
           </div>
         )}
-      </main>
+      </aside>
 
       {/* Save Modal */}
       {showSaveModal && (

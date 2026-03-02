@@ -242,11 +242,11 @@ ${selectedFeed.content || ''}
           >
             <span className="source-icon">📰</span>
             <span className="source-name">全部内容</span>
-            <span className="source-count">{feeds.length}</span>
+            <span className="source-count">{feeds.filter(f => !f.is_read).length}</span>
           </button>
           
           {sources.map(source => {
-            const count = feeds.filter(f => f.source_id === source.id).length;
+            const unreadCount = feeds.filter(f => f.source_id === source.id && !f.is_read).length;
             return (
               <button
                 key={source.id}
@@ -255,7 +255,7 @@ ${selectedFeed.content || ''}
               >
                 <span className="source-icon">{source.type === 'podcast' ? '🎙️' : '📝'}</span>
                 <span className="source-name">{source.name}</span>
-                <span className="source-count">{count}</span>
+                <span className="source-count">{unreadCount}</span>
               </button>
             );
           })}

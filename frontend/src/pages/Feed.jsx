@@ -21,6 +21,7 @@ export default function Feed() {
   const [showAddRSSModal, setShowAddRSSModal] = useState(false);
   const [newRSS, setNewRSS] = useState({ name: '', url: '', type: 'rss' });
   const [contextMenu, setContextMenu] = useState(null); // { x, y, source }
+  const [editingSource, setEditingSource] = useState(null); // Source being edited
 
   useEffect(() => {
     loadFeeds();
@@ -216,6 +217,37 @@ ${selectedFeed.content || ''}
     } catch (error) {
       alert('取消关注失败: ' + (error.response?.data?.detail || error.message));
       setContextMenu(null);
+    }
+  };
+
+  const handleEditSource = () => {
+    if (!contextMenu?.source) return;
+    setEditingSource({
+      id: contextMenu.source.id,
+      name: contextMenu.source.name,
+      url: contextMenu.source.url,
+      type: contextMenu.source.type || 'rss'
+    });
+    setContextMenu(null);
+  };
+
+  const handleUpdateSource = async () => {
+    if (!editingSource?.name.trim() || !editingSource?.url.trim()) {
+      alert('请填写订阅源名称和 URL');
+      return;
+    }
+
+    try {
+      await rssAPI.updateSource(editingSource.id, {
+        name: editingSource.name,
+        url: editingSource.url,
+        type: editingSource.type
+      });
+      alert('更新成功！');
+      setEditingSource(null);
+      loadSources();
+    } catch (error) {
+      alert('更新失败: ' + (error.response?.data?.detail || error.message));
     }
   };
 
@@ -579,9 +611,60 @@ ${selectedFeed.content || ''}
             top: `${contextMenu.y}px`,
           }}
         >
+          <button className="context-menu-item" onClick={handleEditSource}>
+            ✏️ 编辑
+          </button>
           <button className="context-menu-item danger" onClick={handleUnfollow}>
             ❌ 取消关注
           </button>
+        </div>
+      )}
+
+      {/* Edit RSS Modal */}
+      {editingSource && (
+        <div className="modal-overlay" onClick={() => setEditingSource(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>编辑订阅源</h3>
+            <div className="form-group">
+              <label>订阅源名称</label>
+              <input
+                type="text"
+                className="input"
+                placeholder="例如：TechCrunch"
+                value={editingSource.name}
+                onChange={(e) => setEditingSource({ ...editingSource, name: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label>RSS URL</label>
+              <input
+                type="url"
+                className="input"
+                placeholder="https://example.com/rss"
+                value={editingSource.url}
+                onChange={(e) => setEditingSource({ ...editingSource, url: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label>类型</label>
+              <select
+                className="input"
+                value={editingSource.type}
+                onChange={(e) => setEditingSource({ ...editingSource, type: e.target.value })}
+              >
+                <option value="rss">RSS/Atom</option>
+                <option value="podcast">播客</option>
+              </select>
+            </div>
+            <div className="modal-actions">
+              <button className="btn btn-secondary" onClick={() => setEditingSource(null)}>
+                取消
+              </button>
+              <button className="btn btn-primary" onClick={handleUpdateSource}>
+                保存
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

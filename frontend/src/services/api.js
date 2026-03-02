@@ -27,6 +27,7 @@ export const authAPI = {
 export const rssAPI = {
   getSources: () => api.get('/rss/sources'),
   createSource: (source) => api.post('/rss/sources', source),
+  updateSource: (id, source) => api.put(`/rss/sources/${id}`, source),
   deleteSource: (id) => api.delete(`/rss/sources/${id}`),
   fetchFeeds: () => api.post('/rss/fetch'),
   fetchSourceFeeds: (id) => api.post(`/rss/sources/${id}/fetch`),

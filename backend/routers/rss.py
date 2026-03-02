@@ -27,16 +27,53 @@ async def create_rss_source(
     authenticated: bool = Depends(verify_token)
 ):
     """Create a new RSS source"""
+    # Convert rsshub:// protocol to https://rsshub.app/
+    url = source.url
+    if url.startswith('rsshub://'):
+        url = url.replace('rsshub://', 'https://rsshub.app/', 1)
+    
     # Check if source already exists
     existing = db.query(models.RSSSource).filter(
-        models.RSSSource.url == source.url
+        models.RSSSource.url == url
     ).first()
     
     if existing:
         raise HTTPException(status_code=400, detail="RSS source already exists")
     
-    db_source = models.RSSSource(**source.dict())
+    # Create source with converted URL
+    source_data = source.dict()
+    source_data['url'] = url
+    db_source = models.RSSSource(**source_data)
     db.add(db_source)
+    db.commit()
+    db.refresh(db_source)
+    
+    return db_source
+
+
+@router.put("/sources/{source_id}", response_model=schemas.RSSSourceResponse)
+async def update_rss_source(
+    source_id: int,
+    source: schemas.RSSSourceCreate,
+    db: Session = Depends(get_db),
+    authenticated: bool = Depends(verify_token)
+):
+    """Update an RSS source"""
+    db_source = db.query(models.RSSSource).filter(models.RSSSource.id == source_id).first()
+    
+    if not db_source:
+        raise HTTPException(status_code=404, detail="RSS source not found")
+    
+    # Convert rsshub:// protocol to https://rsshub.app/
+    url = source.url
+    if url.startswith('rsshub://'):
+        url = url.replace('rsshub://', 'https://rsshub.app/', 1)
+    
+    # Update source fields
+    db_source.name = source.name
+    db_source.url = url
+    db_source.type = source.type
+    
     db.commit()
     db.refresh(db_source)
     

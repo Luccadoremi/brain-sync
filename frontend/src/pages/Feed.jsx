@@ -20,6 +20,7 @@ export default function Feed() {
   const [readFilter, setReadFilter] = useState('unread'); // 'all', 'unread', 'read'
   const [showAddRSSModal, setShowAddRSSModal] = useState(false);
   const [newRSS, setNewRSS] = useState({ name: '', url: '', type: 'rss' });
+  const [contextMenu, setContextMenu] = useState(null); // { x, y, source }
 
   useEffect(() => {
     loadFeeds();
@@ -182,6 +183,51 @@ ${selectedFeed.content || ''}
     }
   };
 
+  const handleContextMenu = (e, source) => {
+    e.preventDefault();
+    setContextMenu({
+      x: e.clientX,
+      y: e.clientY,
+      source
+    });
+  };
+
+  const handleUnfollow = async () => {
+    if (!contextMenu?.source) return;
+    
+    if (!confirm(`确定要取消关注「${contextMenu.source.name}」吗？`)) {
+      setContextMenu(null);
+      return;
+    }
+
+    try {
+      await rssAPI.deleteSource(contextMenu.source.id);
+      alert('已取消关注');
+      setContextMenu(null);
+      
+      // If currently viewing this source, reset to all
+      if (selectedSource?.id === contextMenu.source.id) {
+        setSelectedSource(null);
+      }
+      
+      // Reload sources and feeds
+      loadSources();
+      loadFeeds();
+    } catch (error) {
+      alert('取消关注失败: ' + (error.response?.data?.detail || error.message));
+      setContextMenu(null);
+    }
+  };
+
+  // Close context menu when clicking anywhere
+  useEffect(() => {
+    const handleClick = () => setContextMenu(null);
+    if (contextMenu) {
+      document.addEventListener('click', handleClick);
+      return () => document.removeEventListener('click', handleClick);
+    }
+  }, [contextMenu]);
+
   if (loading) {
     return <div className="page-loading">加载中...</div>;
   }
@@ -252,6 +298,7 @@ ${selectedFeed.content || ''}
                 key={source.id}
                 className={`source-item ${selectedSource?.id === source.id ? 'active' : ''}`}
                 onClick={() => setSelectedSource(source)}
+                onContextMenu={(e) => handleContextMenu(e, source)}
               >
                 <span className="source-icon">{source.type === 'podcast' ? '🎙️' : '📝'}</span>
                 <span className="source-name">{source.name}</span>
@@ -519,6 +566,22 @@ ${selectedFeed.content || ''}
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Context Menu */}
+      {contextMenu && (
+        <div 
+          className="context-menu"
+          style={{
+            position: 'fixed',
+            left: `${contextMenu.x}px`,
+            top: `${contextMenu.y}px`,
+          }}
+        >
+          <button className="context-menu-item danger" onClick={handleUnfollow}>
+            ❌ 取消关注
+          </button>
         </div>
       )}
     </div>
